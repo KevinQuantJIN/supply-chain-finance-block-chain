@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： localhost
--- 產生時間： 2023 年 03 月 23 日 12:52
+-- 產生時間： 2023 年 03 月 23 日 13:15
 -- 伺服器版本： 10.4.22-MariaDB
 -- PHP 版本： 8.1.0
 
@@ -20,6 +20,59 @@ SET time_zone = "+00:00";
 --
 -- 資料庫: `supplychainf`
 --
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `bank`
+--
+
+CREATE TABLE `bank` (
+  `total_balance` int(11) NOT NULL,
+  `total_amt_lent` int(11) NOT NULL,
+  `loan_loss_reserves` int(11) NOT NULL,
+  `deliquency_rate` double NOT NULL,
+  `outstanding_request` int(11) NOT NULL,
+  `num_loans` int(11) NOT NULL,
+  `pct_appr` double NOT NULL,
+  `default_rate` double NOT NULL,
+  `bank_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `company`
+--
+
+CREATE TABLE `company` (
+  `industry` varchar(99) NOT NULL,
+  `upstream` varchar(99) NOT NULL,
+  `downstream` varchar(99) NOT NULL,
+  `revenue` int(11) NOT NULL,
+  `orders` int(11) NOT NULL,
+  `customers` int(11) NOT NULL,
+  `credit_rating` varchar(99) NOT NULL,
+  `company_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- 資料表結構 `loan`
+--
+
+CREATE TABLE `loan` (
+  `borrower_company_id` int(11) NOT NULL,
+  `bank_id` int(11) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `loan_amt` int(11) NOT NULL,
+  `repayment_amt` int(11) NOT NULL,
+  `due_date` datetime NOT NULL,
+  `term` int(11) NOT NULL,
+  `interest_rate` double NOT NULL,
+  `result` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -47,6 +100,24 @@ INSERT INTO `user_info` (`user_type`, `user_name`, `pswd`, `email`, `address`, `
 --
 -- 已傾印資料表的索引
 --
+
+--
+-- 資料表索引 `bank`
+--
+ALTER TABLE `bank`
+  ADD PRIMARY KEY (`bank_id`);
+
+--
+-- 資料表索引 `company`
+--
+ALTER TABLE `company`
+  ADD PRIMARY KEY (`company_id`);
+
+--
+-- 資料表索引 `loan`
+--
+ALTER TABLE `loan`
+  ADD PRIMARY KEY (`borrower_company_id`);
 
 --
 -- 資料表索引 `user_info`
